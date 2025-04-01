@@ -1,16 +1,62 @@
-const fechData = async(seahTerm)=> {
-    const response = await axios.get('http://omdbapi.com/', {
-        params:{
-            apikey: '4bd2499f',
-            s: 'avengers'
+// const fechData = async(seahTerm)=> {
+//     const response = await axios.get('http://omdbapi.com/', {
+//         params:{
+//             apikey: '4bd2499f',
+//             s: 'avengers'
+//         }
+//     })
+
+// if(response.data.Error){
+//     return []
+// }
+// console.log(response.data)
+
+// }
+
+const fetchData = async (searchTerm) => {
+    const response = await axios.get('https://omdbapi.com/',{
+        params: {
+            apikey: "4bd2499f",
+            i: movie.imdbID
         }
     })
+    console.log(response.data)
+    summaryElement.innerHTML = movieTemplate(response.data)
 
-if(response.data.Error){
-    return []
+        //preguntamos cual lado es?
+    if(side === "left"){
+        Leftmovie = response.data
+
+    }else{
+        rightMovie = response.data
+    }
+    //preguntamos si tenemos ambos lados
+    if(Leftmovie && rightMovie){
+        //entonces ejecutamos la funcion de comparacion
+        runComparison()
+
+    }
+
 }
-console.log(response.data)
 
+const runComparison = () => {
+    console.log("comparacion de peliculas")
+    const leftSideStats = document.querySelector("left-summary . notification")
+    const rightSideStats = document.querySelector("rightft-summary . notification")
+    leftSideStats.foreach((leftStat, index) =>{
+        const rightStat = rightSideStats[index]
+        const leftSideValue = parseInt(leftStat.dataset.value)
+        const rightSideValue = parseInt(rightSideStats.dataset.value)
+        
+        if(rightSideValue > leftSideValue){
+            leftStat.classList.remove("is-primary")
+            leftStat.classList.add("is-danger")
+        }else{
+            rightStat.classList.remove("is-primary")
+            rightStat.classList.add("is-danger")
+
+        }
+    })
 }
 
 // fechData()
