@@ -16,7 +16,7 @@
 const fetchData = async (searchTerm) => {
     const response = await axios.get('https://omdbapi.com/',{
         params: {
-            apikey: "4bd2499f",
+            apikey: "edae8d4e",
             i: movie.imdbID
         }
     })
@@ -47,7 +47,7 @@ const runComparison = () => {
         const rightStat = rightSideStats[index]
         const leftSideValue = parseInt(leftStat.dataset.value)
         const rightSideValue = parseInt(rightSideStats.dataset.value)
-        
+       
         if(rightSideValue > leftSideValue){
             leftStat.classList.remove("is-primary")
             leftStat.classList.add("is-danger")
@@ -58,6 +58,68 @@ const runComparison = () => {
         }
     })
 }
+
+const movieDetailsovieTemplate = (movieDetails) => {
+    //Transformar a numeros los strings que llegan de los datos
+    const dollars = parseInt(movieDetails.BoxOffice.replace(/\$/g, '').replace(/,/g, ''))
+    console.log(dollars)
+    const metascore = parseInt(movieDetails.Metascore)
+    const imdbRating = parseFloat(movieDetails.imdbRating)
+    const imdbVotes = parseInt(movieDetails.imdbVotes.replace(/,/g, ''))
+    console.log(metascore, imdbRating, imdbVotes)
+    const awards = movieDetails.Awards.split('').reduce((prev, word) => {
+        const value = parseInt(word)
+
+        if(isNaN(value)){
+            return prev
+        }else{
+            return prev + value
+        }
+        }, 0)
+        console.log('Awards', awards)
+    }
+
+    // Agregar la propiedad data-value a cada elemento del template
+
+    return `
+        <article class="media"
+            <figure class="media-left"
+                <p class="image"
+                    <img src="${movieDetails.Poster}"/>
+                </p>
+            </figure>    
+            <div class="media-content"
+                <div class="content"
+                    <h1>${movieDetails.Title}</h1>
+                    <h4>${movieDetails.Genre}</h1>
+                    <p>${movieDetails.Plot}<p>
+                </div>
+            </div>
+        </article>
+        <article>
+        <article data-value=${awards} class="notification is-primary">
+            <p class="title">${movieDetails.Awards}
+            <p class="subtitle">Awards</p>
+        </article>
+        <article data-value=${dollars} class="notification is-primary">
+            <p class="title">${movieDetails.BoxOffice}
+            <p class="subtitle">BoxOffice</p>
+        </article>
+        <article data-value=${metascore} class="notification is-primary">
+            <p class="title">${movieDetails.Metascore}
+            <p class="subtitle">Metascore</p>
+        </article>
+        <article data-value=${imdbRating} class="notification is-primary">
+            <p class="title">${movieDetails.imdRating}
+            <p class="subtitle">IMDB Rating</p>
+        </article>
+        <article data-value=${imdbVotes} class="notification is-primary">
+            <p class="title">${movieDetails.imdbVotes}
+            <p class="subtitle">IMDB Votes</p>
+        </article>
+
+    `
+
 
 // fechData()
 const root = document.querySelector('.autocomplete')
@@ -76,7 +138,7 @@ const dropdown = document.querySelector(".dropdown")
 const resultsWrapper = document.querySelector(".results")
 
 const debonce = (func, delay = 1000) => {
-    let timeoutId 
+    let timeoutId
     return(...args) => {
         clearTimeout(timeoutId)
         timeoutId = setTimeout(() => {
@@ -126,7 +188,7 @@ document.addEventListener('click', event => {
 const onMovieSelect = async (movie) => {
     const response = await axios.get('http://www.omdbapi.com/',{
         params: {
-            apikey: '',
+            apikey: 'edae8d4e',
             i: movie.imdID
         }
     })
@@ -139,7 +201,7 @@ document.querySelector('#sumary').innerHTML = movieTemplate()
 
 const movieTemplate = (movieDetail) => {
     return `
-        <article class="media"> 
+        <article class="media">
             <figure class="media-left">
                 <p class="image">
                     <img src="${movieDetail.Poster}" />
