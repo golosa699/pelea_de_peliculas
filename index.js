@@ -1,7 +1,7 @@
 // const fechData = async(seahTerm)=> {
 //     const response = await axios.get('http://omdbapi.com/', {
 //         params:{
-//             apikey: '4bd2499f',
+//             apikey: 4bd2499f',
 //             s: 'avengers'
 //         }
 //     })
@@ -16,7 +16,7 @@
 const fetchData = async (searchTerm) => {
     const response = await axios.get('https://omdbapi.com/',{
         params: {
-            apikey: "edae8d4e",
+            apikey: "4bd2499f",
             i: movie.imdbID
         }
     })
@@ -188,7 +188,7 @@ document.addEventListener('click', event => {
 const onMovieSelect = async (movie) => {
     const response = await axios.get('http://www.omdbapi.com/',{
         params: {
-            apikey: 'edae8d4e',
+            apikey: '4bd2499f',
             i: movie.imdID
         }
     })
